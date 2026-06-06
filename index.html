@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tutum Atölyesi | TriMetrix Anketi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Ana navigasyon">
+      <a class="brand" href="#top" aria-label="Tutum Atölyesi TriMetrix Anketi">
+        <span class="brand-mark">TA</span>
+        <span>
+          <strong>Tutum Atölyesi</strong>
+          <small>TriMetrix Anketi</small>
+        </span>
+      </a>
+      <div class="nav-links" aria-label="Bölümler">
+        <a href="#deger-profili">Değer Profili</a>
+        <a href="#motivasyon">Motivasyon</a>
+        <a href="#disc">DISC</a>
+      </div>
+    </nav>
+    <div class="progress-wrap" aria-hidden="true">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Tutum dönüştüren güçlü değerlendirme</p>
+        <h1>TriMetrix Anketi</h1>
+        <p class="hero-text">Bu form tek sayfada yanıtlanır. Değer Profili ve Motivasyon bölümlerinde ifadeleri sürükleyerek sıralayın; DISC bölümünde her grup için sizi en çok ve en az tanımlayan ifadeyi seçin.</p>
+      </div>
+      <aside class="hero-card">
+        <span class="chip">PDF çıktı</span>
+        <h2>Yanıtlarınız tamamlandığında rapor oluşur.</h2>
+        <p>Tüm zorunlu alanlar tamamlanmadan gönderim yapılamaz.</p>
+      </aside>
+    </section>
+
+    <form id="surveyForm" novalidate>
+      <section class="participant-card section-card">
+        <div class="section-head compact">
+          <span class="section-no">01</span>
+          <div>
+            <h2>Katılımcı Bilgileri</h2>
+            <p>PDF çıktısında kullanılacak temel bilgiler.</p>
+          </div>
+        </div>
+        <div class="field-grid">
+          <label>Ad Soyad<input id="fullName" name="fullName" autocomplete="name" required placeholder="Adınızı ve soyadınızı yazın" /></label>
+          <label>E-posta<input id="email" name="email" type="email" autocomplete="email" required placeholder="ornek@firma.com" /></label>
+          <label>Şirket / Kurum<input id="company" name="company" required placeholder="Kurum adı" /></label>
+          <label>Pozisyon<input id="position" name="position" required placeholder="Pozisyon / unvan" /></label>
+        </div>
+      </section>
+
+      <section id="deger-profili" class="section-card">
+        <div class="section-head">
+          <span class="section-no">02</span>
+          <div>
+            <h2>Değer Profili / Hartman Value Profile</h2>
+            <p>Her listedeki ifadeleri en iyi / en çok katıldığınızdan en kötü / en az katıldığınıza doğru sıralayın. Kutuları sürükleyip bırakabilir ya da ok butonlarını kullanabilirsiniz.</p>
+          </div>
+        </div>
+        <div id="valueProfile" class="rank-grid"></div>
+      </section>
+
+      <section id="motivasyon" class="section-card">
+        <div class="section-head">
+          <span class="section-no">03</span>
+          <div>
+            <h2>Motivasyonlar</h2>
+            <p>Her kategori için 6 ifadeyi sizin için en uygun olandan en az uygun olana doğru sıralayın.</p>
+          </div>
+        </div>
+        <div id="motivators" class="rank-grid motivator-grid"></div>
+      </section>
+
+      <section id="disc" class="section-card">
+        <div class="section-head">
+          <span class="section-no">04</span>
+          <div>
+            <h2>Davranış / DISC</h2>
+            <p>Her grup için sizi <strong>en çok</strong> ve <strong>en az</strong> tanımlayan birer ifade seçin. Aynı ifadeyi iki kez seçemezsiniz.</p>
+          </div>
+        </div>
+        <div id="discGroups" class="disc-list"></div>
+      </section>
+
+      <section class="submit-card section-card">
+        <div>
+          <h2>Gönder ve PDF Oluştur</h2>
+          <p id="completionText">Form durumunuz hesaplanıyor...</p>
+          <p id="formError" class="form-error" aria-live="polite"></p>
+        </div>
+        <button id="submitBtn" class="primary-btn" type="submit" disabled>PDF Yanıtları Oluştur</button>
+      </section>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <strong>Tutum Atölyesi</strong>
+    <span>Beyaz yakalı profesyoneller için tutum dönüştüren kurumsal eğitim ve danışmanlık.</span>
+  </footer>
+</body>
+</html>
