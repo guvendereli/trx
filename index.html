@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tutum Atölyesi | DISC Davranış Anketi</title>
+  <meta name="description" content="Tutum Atölyesi DISC Davranış Anketi" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+    :root {
+      --red:#c8102e; --red-dark:#9f0f26; --gray:#6c6c6c; --dark:#172033;
+      --muted:#667085; --line:#eadfd4; --soft:#fbf8f5; --paper:#fff;
+      --ok:#0f766e; --warn:#b42318; --shadow:0 20px 55px rgba(18,25,38,.10);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,Montserrat,Arial,sans-serif;color:var(--dark);background:linear-gradient(180deg,#fff 0%,#fbf8f5 50%,#fff 100%);}
+    .topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid #f0e7df;}
+    .topbar-inner{max-width:1160px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .brand img{width:78px;height:auto;display:block}
+    .brand-title{font-family:Montserrat,Inter,sans-serif;font-weight:800;letter-spacing:.01em;font-size:18px;color:var(--red)}
+    .brand-sub{font-size:12px;color:var(--gray);font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+    .progress-wrap{display:flex;align-items:center;gap:12px;min-width:250px}
+    .progress-label{font-size:13px;color:var(--muted);font-weight:800;white-space:nowrap}
+    .progress{height:10px;background:#f1e7df;border-radius:999px;overflow:hidden;width:190px}
+    .progress span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--red),#7a7a7a);transition:.25s}
+    .hero{max-width:1160px;margin:0 auto;padding:42px 24px 22px;display:grid;grid-template-columns:1.04fr .96fr;gap:32px;align-items:center}
+    .hero-card{background:var(--paper);border:1px solid #f0e2d7;border-radius:32px;padding:38px;box-shadow:var(--shadow)}
+    h1{font-family:Montserrat,Inter,sans-serif;margin:0;font-size:42px;line-height:1.08;letter-spacing:-.035em;color:#111827}
+    .lead{font-size:17px;line-height:1.7;color:#475467;margin:18px 0 0}
+    .notice{margin-top:22px;padding:16px 18px;border-left:5px solid var(--red);background:#fff6f6;border-radius:14px;color:#384152;line-height:1.55;font-weight:600}
+    .hero-logo{display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#fff 0,#fff 35%,#f9f3ee 100%);border-radius:36px;min-height:320px;border:1px solid #f0e2d7;box-shadow:var(--shadow)}
+    .hero-logo img{width:min(78%,430px);height:auto}
+    main{max-width:1160px;margin:0 auto;padding:10px 24px 94px}
+    .section-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin:24px 0 18px}
+    h2{font-family:Montserrat,Inter,sans-serif;font-size:30px;margin:0;letter-spacing:-.02em}
+    .helper{color:var(--muted);font-size:14px;line-height:1.55;max-width:790px}
+    .person{background:#fff;border:1px solid #efe0d5;border-radius:var(--radius);padding:22px;margin:22px 0 26px;box-shadow:0 10px 30px rgba(18,25,38,.06)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    label{display:block;font-weight:800;font-size:13px;margin-bottom:7px;color:#344054}
+    input{width:100%;border:1px solid #ded3cb;border-radius:14px;padding:14px 14px;font:inherit;font-size:15px;outline:none;background:#fff}
+    input:focus{border-color:var(--red);box-shadow:0 0 0 4px rgba(200,16,46,.10)}
+    .question{background:#fff;border:1px solid #eadfd4;border-radius:28px;margin:18px 0;padding:22px;box-shadow:0 12px 35px rgba(18,25,38,.06)}
+    .question.incomplete{border-color:#f3b3b8;box-shadow:0 0 0 4px rgba(200,16,46,.08)}
+    .q-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+    .q-title{font-family:Montserrat,Inter,sans-serif;font-weight:800;font-size:20px}
+    .q-status{font-size:13px;font-weight:800;border-radius:999px;padding:7px 11px;background:#f6efe8;color:#765d4d}
+    .q-status.done{background:#ecfdf3;color:#027a48}
+    .options{display:grid;grid-template-columns:1fr;gap:12px}
+    .option{border:1px solid #eadfd4;border-radius:20px;padding:14px;background:#fffaf7;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+    .option-text{font-size:16px;line-height:1.45;font-weight:700;color:#1d2939}
+    .option-meta{margin-top:5px;font-size:12px;color:#98a2b3;font-weight:800}
+    .choices{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .choice{border:1px solid #d9cec4;background:#fff;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:900;cursor:pointer;user-select:none;transition:.15s;min-width:82px;text-align:center}
+    .choice:hover{transform:translateY(-1px);border-color:var(--red)}
+    .choice input{display:none}
+    .choice.most.active{background:var(--red);border-color:var(--red);color:#fff}
+    .choice.least.active{background:#5f6368;border-color:#5f6368;color:#fff}
+    .error{display:none;margin-top:12px;color:var(--warn);font-weight:800;font-size:13px}
+    .error.show{display:block}
+    .submitbar{position:sticky;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-top:1px solid #eadfd4;margin:36px -24px -94px;padding:14px 24px;z-index:9}
+    .submit-inner{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:18px}
+    .summary{font-size:14px;color:#475467;font-weight:800}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    button{border:0;border-radius:999px;padding:15px 22px;font-family:Montserrat,Inter,sans-serif;font-size:15px;font-weight:900;cursor:pointer;background:var(--red);color:#fff;box-shadow:0 12px 28px rgba(200,16,46,.22)}
+    button:disabled{background:#c6c0bb;color:#fff;box-shadow:none;cursor:not-allowed}
+    button.secondary{background:#f2f4f7;color:#344054;box-shadow:none}
+    .toast{position:fixed;right:22px;bottom:86px;background:#172033;color:#fff;padding:12px 16px;border-radius:14px;box-shadow:0 20px 55px rgba(0,0,0,.2);font-size:14px;font-weight:800;display:none;z-index:40}
+    .toast.show{display:block}
+    @media(max-width:880px){.hero{grid-template-columns:1fr}.hero-logo{min-height:220px}h1{font-size:34px}.grid{grid-template-columns:1fr}.topbar-inner{align-items:flex-start;flex-direction:column}.progress-wrap{width:100%}.progress{width:100%}.option{grid-template-columns:1fr}.submit-inner{align-items:flex-start;flex-direction:column}.actions{width:100%}button{width:100%}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="assets/logo.png" alt="Tutum Atölyesi Eğitim" />
+        <div><div class="brand-title">DISC Davranış Anketi</div><div class="brand-sub">Tutum Atölyesi</div></div>
+      </div>
+      <div class="progress-wrap"><div class="progress-label" id="progressLabel">0 / 24 grup</div><div class="progress"><span id="progressBar"></span></div></div>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="hero-card">
+      <h1>DISC Davranış Anketi</h1>
+      <p class="lead">Her grupta dört ifade bulunur. Her grup için sizi en çok tanımlayan bir ifadeyi ve sizi en az tanımlayan bir ifadeyi seçin.</p>
+      <div class="notice">Tüm seçimler tarayıcıda otomatik saklanır. Sayfa kapanırsa aynı cihaz ve tarayıcıda kaldığınız yerden devam edebilirsiniz. PDF düğmesi, yanıtları doğrudan bilgisayarınıza PDF olarak indirir.</div>
+    </div>
+    <div class="hero-logo"><img src="assets/logo.png" alt="Tutum Atölyesi Eğitim Logosu" /></div>
+  </section>
+  <main>
+    <section class="person">
+      <div class="grid">
+        <div><label for="firstName">Ad</label><input id="firstName" autocomplete="given-name" required /></div>
+        <div><label for="lastName">Soyad</label><input id="lastName" autocomplete="family-name" required /></div>
+        <div><label for="email">E-posta</label><input id="email" type="email" autocomplete="email" required /></div>
+        <div><label for="company">Kurum / Şirket</label><input id="company" autocomplete="organization" required /></div>
+      </div>
+    </section>
+    <div class="section-head">
+      <div><h2>Davranış / DISC</h2><div class="helper">Soru ifadeleri Excel dosyasındaki MAP sayfasının “Açıklanmış anlamı” alanından birebir alınmıştır. İfade metinleri değiştirilmemiştir.</div></div>
+    </div>
+    <form id="discForm" novalidate><div id="questions"></div></form>
+    <div class="submitbar"><div class="submit-inner"><div class="summary" id="summaryText">Katılımcı bilgileri ve 24 grup tamamlanmalı.</div><div class="actions"><button class="secondary" id="saveJsonBtn" type="button">Yanıtları JSON İndir</button><button id="submitBtn" type="button" disabled>PDF’i Bilgisayarıma İndir</button></div></div></div>
+  </main>
+  <div class="toast" id="toast">Kaydedildi.</div>
+  <script>
+    const ITEMS = [
+  {
+    "group": 1,
+    "wordNo": "1.1",
+    "original": "Enthusiastic",
+    "disc": "I",
+    "text": "Coşkulu ve istekli; işe veya ortama canlılıkla katılan."
+  },
+  {
+    "group": 1,
+    "wordNo": "1.2",
+    "original": "Contented, satisfied",
+    "disc": "S",
+    "text": "Memnun ve tatmin olmuş; içinde bulunduğu durumdan genel olarak hoşnut olan."
+  },
+  {
+    "group": 1,
+    "wordNo": "1.3",
+    "original": "Positive, confident",
+    "disc": "D",
+    "text": "Olumlu ve kendinden emin; başarabileceğine ve sonuç alabileceğine inanan."
+  },
+  {
+    "group": 1,
+    "wordNo": "1.4",
+    "original": "Peaceful, tranquil",
+    "disc": "C",
+    "text": "Huzurlu ve dingin; gerilimi artırmadan sakin kalan."
+  },
+  {
+    "group": 2,
+    "wordNo": "2.1",
+    "original": "Careful, calculating",
+    "disc": "C",
+    "text": "Dikkatli ve hesaplı; adım atmadan önce riskleri, sonuçları ve ayrıntıları tartan."
+  },
+  {
+    "group": 2,
+    "wordNo": "2.2",
+    "original": "Bold, daring",
+    "disc": "D",
+    "text": "Cesur ve gözü pek; risk almaktan ve öne çıkmaktan çekinmeyen."
+  },
+  {
+    "group": 2,
+    "wordNo": "2.3",
+    "original": "Supportive",
+    "disc": "S",
+    "text": "Destekleyici; başkalarının yanında duran ve yardımcı olmaya istekli."
+  },
+  {
+    "group": 2,
+    "wordNo": "2.4",
+    "original": "Charming, delightful",
+    "disc": "I",
+    "text": "Hoş ve etkileyici; insanlarda olumlu ve sıcak bir izlenim bırakan."
+  },
+  {
+    "group": 3,
+    "wordNo": "3.1",
+    "original": "Expressive",
+    "disc": "I",
+    "text": "İfade gücü yüksek; duygu ve düşüncelerini açık biçimde dışa vuran."
+  },
+  {
+    "group": 3,
+    "wordNo": "3.2",
+    "original": "Daring, risk-taker",
+    "disc": "D",
+    "text": "Risk almaya yatkın; belirsizlikte bile cesurca adım atan."
+  },
+  {
+    "group": 3,
+    "wordNo": "3.3",
+    "original": "Diplomatic, tactful",
+    "disc": "C",
+    "text": "Diplomatik ve ölçülü; insanları kırmadan, uygun sözü seçerek iletişim kuran."
+  },
+  {
+    "group": 3,
+    "wordNo": "3.4",
+    "original": "Satisfied, content",
+    "disc": "S",
+    "text": "Tatmin olmuş ve hoşnut; mevcut sonuçtan veya durumdan memnun olan."
+  },
+  {
+    "group": 4,
+    "wordNo": "4.1",
+    "original": "Respectful, shows respect",
+    "disc": "C",
+    "text": "Saygılı; insanlara, kurallara ve sınırlara özen gösteren."
+  },
+  {
+    "group": 4,
+    "wordNo": "4.2",
+    "original": "Pioneering, exploring, enterprising",
+    "disc": "D",
+    "text": "Öncü ve girişimci; yeni alanları denemeye ve başlatmaya istekli."
+  },
+  {
+    "group": 4,
+    "wordNo": "4.3",
+    "original": "Optimistic",
+    "disc": "I",
+    "text": "İyimser; olayların olumlu tarafını görmeye eğilimli."
+  },
+  {
+    "group": 4,
+    "wordNo": "4.4",
+    "original": "Accommodating, willing to please, ready to help",
+    "disc": "S",
+    "text": "Uyum sağlayan ve yardım etmeye hazır; başkalarını memnun etmeye özen gösteren."
+  },
+  {
+    "group": 5,
+    "wordNo": "5.1",
+    "original": "Willing, agreeable",
+    "disc": "S",
+    "text": "İstekli ve uzlaşmaya açık; iş birliğine kolaylıkla katılan."
+  },
+  {
+    "group": 5,
+    "wordNo": "5.2",
+    "original": "Eager, impatient",
+    "disc": "D",
+    "text": "Hevesli fakat sabırsız; bir an önce harekete geçmek isteyen."
+  },
+  {
+    "group": 5,
+    "wordNo": "5.3",
+    "original": "Methodical",
+    "disc": "C",
+    "text": "Metotlu; işleri düzenli bir sıra ve yöntemle yapan."
+  },
+  {
+    "group": 5,
+    "wordNo": "5.4",
+    "original": "High-spirited, lively, enthusiastic",
+    "disc": "I",
+    "text": "Canlı, neşeli ve coşkulu; ortama enerji katan."
+  },
+  {
+    "group": 6,
+    "wordNo": "6.1",
+    "original": "Logical",
+    "disc": "C",
+    "text": "Mantıklı; kararlarında akıl yürütme, tutarlılık ve neden-sonuç ilişkisi arayan."
+  },
+  {
+    "group": 6,
+    "wordNo": "6.2",
+    "original": "Obedient, will do as told, dutiful",
+    "disc": "S",
+    "text": "Söz dinleyen ve görevine bağlı; verilen talimatları yerine getirmeye yatkın."
+  },
+  {
+    "group": 6,
+    "wordNo": "6.3",
+    "original": "Unconquerable, determined",
+    "disc": "D",
+    "text": "Yılmayan ve kararlı; engel karşısında kolay pes etmeyen."
+  },
+  {
+    "group": 6,
+    "wordNo": "6.4",
+    "original": "Playful, frisky, full of fun",
+    "disc": "I",
+    "text": "Oyuncu ve eğlenceli; ortama neşe, hareket ve rahatlık katan."
+  },
+  {
+    "group": 7,
+    "wordNo": "7.1",
+    "original": "Adventurous, willing to take chances",
+    "disc": "D",
+    "text": "Maceracı ve fırsatları denemeye açık; yeni deneyimler için risk alabilen."
+  },
+  {
+    "group": 7,
+    "wordNo": "7.2",
+    "original": "Analytical",
+    "disc": "C",
+    "text": "Analitik; bilgiyi parçalara ayırarak, neden-sonuç ve ayrıntılar üzerinden inceleyen."
+  },
+  {
+    "group": 7,
+    "wordNo": "7.3",
+    "original": "Cordial, warm, friendly",
+    "disc": "I",
+    "text": "Samimi, sıcak ve arkadaş canlısı; insanlarla kolay yakınlık kuran."
+  },
+  {
+    "group": 7,
+    "wordNo": "7.4",
+    "original": "Moderate, avoids extremes",
+    "disc": "S",
+    "text": "Ölçülü; aşırı uçlardan kaçınarak dengeli davranan."
+  },
+  {
+    "group": 8,
+    "wordNo": "8.1",
+    "original": "Good mixer, likes being with others",
+    "disc": "I",
+    "text": "İnsanlarla kolay kaynaşan; birlikte olmaktan ve sosyal ortama katılmaktan hoşlanan."
+  },
+  {
+    "group": 8,
+    "wordNo": "8.2",
+    "original": "Structured",
+    "disc": "C",
+    "text": "Yapılandırılmış; düzen, plan ve net çerçeve içinde çalışmayı tercih eden."
+  },
+  {
+    "group": 8,
+    "wordNo": "8.3",
+    "original": "Vigorous, energetic",
+    "disc": "D",
+    "text": "Dinç ve enerjik; yüksek tempo ve canlılıkla hareket eden."
+  },
+  {
+    "group": 8,
+    "wordNo": "8.4",
+    "original": "Lenient, tolerant of others' actions",
+    "disc": "S",
+    "text": "Müsamahalı ve hoşgörülü; başkalarının davranışlarına karşı esnek ve toleranslı."
+  },
+  {
+    "group": 9,
+    "wordNo": "9.1",
+    "original": "Competitive, seeking to win",
+    "disc": "D",
+    "text": "Rekabetçi; kazanmayı, öne geçmeyi ve sonuçta üstün gelmeyi önemseyen."
+  },
+  {
+    "group": 9,
+    "wordNo": "9.2",
+    "original": "Considerate, caring, thoughtful",
+    "disc": "S",
+    "text": "Düşünceli ve ilgili; başkalarının durumunu, ihtiyacını ve duygularını hesaba katan."
+  },
+  {
+    "group": 9,
+    "wordNo": "9.3",
+    "original": "Outgoing, fun-loving, socially striving",
+    "disc": "I",
+    "text": "Dışa dönük ve eğlenceyi seven; sosyal ortamlarda aktif olmaya çalışan."
+  },
+  {
+    "group": 9,
+    "wordNo": "9.4",
+    "original": "Harmonious, agreeable",
+    "disc": "C",
+    "text": "Uyumlu ve geçimli; ilişkilerde denge ve anlaşma arayan."
+  },
+  {
+    "group": 10,
+    "wordNo": "10.1",
+    "original": "Aggressive, challenger, takes action",
+    "disc": "D",
+    "text": "Atak ve meydan okuyan; beklemek yerine harekete geçip engellerin üzerine giden."
+  },
+  {
+    "group": 10,
+    "wordNo": "10.2",
+    "original": "Life of the party, outgoing, entertaining",
+    "disc": "I",
+    "text": "Ortamın neşesi; dışa dönük, eğlendiren ve sosyal dikkat çeken."
+  },
+  {
+    "group": 10,
+    "wordNo": "10.3",
+    "original": "Easy mark, easily taken advantage of",
+    "disc": "S",
+    "text": "Kolay kandırılabilen veya yönlendirilebilen; iyi niyeti nedeniyle başkalarının etkisine açık."
+  },
+  {
+    "group": 10,
+    "wordNo": "10.4",
+    "original": "Fearful, afraid",
+    "disc": "C",
+    "text": "Korkulu veya ürkek; risk, hata ya da tehdit algısında geri duran."
+  },
+  {
+    "group": 11,
+    "wordNo": "11.1",
+    "original": "Stimulating",
+    "disc": "I",
+    "text": "Canlandırıcı ve teşvik edici; insanlarda enerji ve hareket isteği uyandıran."
+  },
+  {
+    "group": 11,
+    "wordNo": "11.2",
+    "original": "Sympathetic, compassionate, understanding",
+    "disc": "S",
+    "text": "Duyarlı, şefkatli ve anlayışlı; başkalarının duygularını önemseyen."
+  },
+  {
+    "group": 11,
+    "wordNo": "11.3",
+    "original": "Tolerant",
+    "disc": "C",
+    "text": "Hoşgörülü; farklı fikirlere ve davranışlara alan tanıyan."
+  },
+  {
+    "group": 11,
+    "wordNo": "11.4",
+    "original": "Aggressive",
+    "disc": "D",
+    "text": "Atak ve baskın; istediği sonuca ulaşmak için güçlü biçimde hareket eden."
+  },
+  {
+    "group": 12,
+    "wordNo": "12.1",
+    "original": "Talkative, chatty",
+    "disc": "I",
+    "text": "Konuşkan ve sohbet etmeyi seven; düşüncelerini sözlü olarak paylaşmaya yatkın."
+  },
+  {
+    "group": 12,
+    "wordNo": "12.2",
+    "original": "Controlled, restrained",
+    "disc": "C",
+    "text": "Kontrollü ve ölçülü; duygu ve tepkilerini sınırlı gösteren."
+  },
+  {
+    "group": 12,
+    "wordNo": "12.3",
+    "original": "Conventional, doing it the usual way, customary",
+    "disc": "S",
+    "text": "Geleneksel; alışılmış yöntemleri ve bilinen düzeni tercih eden."
+  },
+  {
+    "group": 12,
+    "wordNo": "12.4",
+    "original": "Decisive, certain, firm in making a decision",
+    "disc": "D",
+    "text": "Kararlı ve net; karar verirken tereddütü azaltıp fikrinin arkasında duran."
+  },
+  {
+    "group": 13,
+    "wordNo": "13.1",
+    "original": "Well-disciplined, self-controlled",
+    "disc": "C",
+    "text": "Disiplinli ve kendini kontrol edebilen; plan, kural ve sorumlulukla ilerleyen."
+  },
+  {
+    "group": 13,
+    "wordNo": "13.2",
+    "original": "Generous, willing to share",
+    "disc": "S",
+    "text": "Cömert ve paylaşmaya açık; zamanını, ilgisini veya kaynaklarını esirgemeyen."
+  },
+  {
+    "group": 13,
+    "wordNo": "13.3",
+    "original": "Animated, uses gestures for expression",
+    "disc": "I",
+    "text": "Canlı anlatan; jest, mimik ve beden diliyle kendini ifade eden."
+  },
+  {
+    "group": 13,
+    "wordNo": "13.4",
+    "original": "Persistent, unrelenting, refuses to quit",
+    "disc": "D",
+    "text": "Israrcı ve vazgeçmeyen; hedefine ulaşana kadar devam eden."
+  },
+  {
+    "group": 14,
+    "wordNo": "14.1",
+    "original": "Sociable, enjoys the company of others",
+    "disc": "I",
+    "text": "Sosyal; insanlarla birlikte olmaktan keyif alan."
+  },
+  {
+    "group": 14,
+    "wordNo": "14.2",
+    "original": "Patient, steady, deliberate",
+    "disc": "S",
+    "text": "Sabırlı, istikrarlı ve ağırbaşlı; acele etmeden düzenli ilerleyen."
+  },
+  {
+    "group": 14,
+    "wordNo": "14.3",
+    "original": "Self-reliant, independent",
+    "disc": "D",
+    "text": "Kendine yeten ve bağımsız; kararlarını kendi değerlendirmesiyle alabilen."
+  },
+  {
+    "group": 14,
+    "wordNo": "14.4",
+    "original": "Soft-spoken, mild, reserved",
+    "disc": "C",
+    "text": "Yumuşak konuşan, ılımlı ve çekingen; kendini sakin ve düşük tonda ifade eden."
+  },
+  {
+    "group": 15,
+    "wordNo": "15.1",
+    "original": "Gentle, kindly",
+    "disc": "S",
+    "text": "Nazik ve sevecen; insanlara yumuşak ve kırmadan yaklaşan."
+  },
+  {
+    "group": 15,
+    "wordNo": "15.2",
+    "original": "Persuasive, convincing",
+    "disc": "D",
+    "text": "İkna edici ve inandırıcı; başkalarını kendi görüşüne çekebilen."
+  },
+  {
+    "group": 15,
+    "wordNo": "15.3",
+    "original": "Humble, reserved, modest",
+    "disc": "C",
+    "text": "Alçakgönüllü, çekingen ve sade; kendini fazla öne çıkarmayan."
+  },
+  {
+    "group": 15,
+    "wordNo": "15.4",
+    "original": "Magnetic, attracts others",
+    "disc": "I",
+    "text": "Çekim gücü olan; insanların ilgisini ve dikkatini kendine çeken."
+  },
+  {
+    "group": 16,
+    "wordNo": "16.1",
+    "original": "Captivating",
+    "disc": "I",
+    "text": "İlgi çekici ve etkileyici; insanların dikkatini üzerinde tutabilen."
+  },
+  {
+    "group": 16,
+    "wordNo": "16.2",
+    "original": "Kind, willing to give or help",
+    "disc": "S",
+    "text": "İyi kalpli ve yardım etmeye istekli; başkalarına karşı duyarlı ve verici."
+  },
+  {
+    "group": 16,
+    "wordNo": "16.3",
+    "original": "Resigned, gives in",
+    "disc": "C",
+    "text": "Kabullenen ve geri çekilen; direnmek yerine duruma razı olma eğiliminde."
+  },
+  {
+    "group": 16,
+    "wordNo": "16.4",
+    "original": "Force of character, powerful",
+    "disc": "D",
+    "text": "Karakteri güçlü ve etkili; duruşu, iradesi ve kişisel gücü belirgin."
+  },
+  {
+    "group": 17,
+    "wordNo": "17.1",
+    "original": "Companionable, easy to be with",
+    "disc": "I",
+    "text": "Yanında rahat olunan, arkadaş canlısı; birlikte vakit geçirmesi kolay."
+  },
+  {
+    "group": 17,
+    "wordNo": "17.2",
+    "original": "Easygoing",
+    "disc": "S",
+    "text": "Rahat ve uyumlu; olayları fazla zorlamadan akışına bırakabilen."
+  },
+  {
+    "group": 17,
+    "wordNo": "17.3",
+    "original": "Outspoken, speaks freely and boldly",
+    "disc": "D",
+    "text": "Açık sözlü ve cesur konuşan; düşündüğünü doğrudan ifade eden."
+  },
+  {
+    "group": 17,
+    "wordNo": "17.4",
+    "original": "Restrained, reserved, controlled",
+    "disc": "C",
+    "text": "Ölçülü, mesafeli ve kontrollü; tepkilerini sınırlı gösteren."
+  },
+  {
+    "group": 18,
+    "wordNo": "18.1",
+    "original": "Factual",
+    "disc": "C",
+    "text": "Olgulara dayalı; somut bilgi, veri ve kanıt üzerinden değerlendiren."
+  },
+  {
+    "group": 18,
+    "wordNo": "18.2",
+    "original": "Obliging, helpful",
+    "disc": "S",
+    "text": "Yardıma hazır ve kolaylık gösteren; başkalarının isteğini yerine getirmeye yatkın."
+  },
+  {
+    "group": 18,
+    "wordNo": "18.3",
+    "original": "Willpower, strongwilled",
+    "disc": "D",
+    "text": "İradeli ve kararlı; istediğinde güçlü direnç gösterebilen."
+  },
+  {
+    "group": 18,
+    "wordNo": "18.4",
+    "original": "Cheerful, joyful",
+    "disc": "I",
+    "text": "Neşeli ve keyifli; olumlu duygu yayan ve moral veren."
+  },
+  {
+    "group": 19,
+    "wordNo": "19.1",
+    "original": "Attractive, charming, attracts others",
+    "disc": "I",
+    "text": "Çekici ve sempatik; insanların ilgisini ve beğenisini üzerine çeken."
+  },
+  {
+    "group": 19,
+    "wordNo": "19.2",
+    "original": "Systematic",
+    "disc": "C",
+    "text": "Sistematik; işleri düzenli, planlı ve belli bir mantıkla yürüten."
+  },
+  {
+    "group": 19,
+    "wordNo": "19.3",
+    "original": "Stubborn, unyielding",
+    "disc": "D",
+    "text": "İnatçı ve taviz vermeyen; fikrinden veya tutumundan kolay geri dönmeyen."
+  },
+  {
+    "group": 19,
+    "wordNo": "19.4",
+    "original": "Pleasing",
+    "disc": "S",
+    "text": "Hoşa giden ve memnun etmeye çalışan; başkalarında olumlu izlenim bırakmaya önem veren."
+  },
+  {
+    "group": 20,
+    "wordNo": "20.1",
+    "original": "Restless, unable to rest or relax",
+    "disc": "D",
+    "text": "Huzursuz ve yerinde duramayan; rahatlamakta zorlanıp sürekli hareket etme eğiliminde olan."
+  },
+  {
+    "group": 20,
+    "wordNo": "20.2",
+    "original": "Neighbourly, friendly",
+    "disc": "S",
+    "text": "Dostça ve yakın; çevresindekilerle sıcak ilişkiler kuran."
+  },
+  {
+    "group": 20,
+    "wordNo": "20.3",
+    "original": "Popular, liked by many or most people",
+    "disc": "I",
+    "text": "Popüler; birçok kişi tarafından sevilen ve kabul gören."
+  },
+  {
+    "group": 20,
+    "wordNo": "20.4",
+    "original": "Orderly, neat",
+    "disc": "C",
+    "text": "Düzenli ve tertipli; işlerini ve ortamını planlı, temiz bir düzen içinde tutan."
+  },
+  {
+    "group": 21,
+    "wordNo": "21.1",
+    "original": "Challenging, assertive",
+    "disc": "D",
+    "text": "Meydan okuyan ve kendini ortaya koyan; görüşünü güçlü biçimde savunan."
+  },
+  {
+    "group": 21,
+    "wordNo": "21.2",
+    "original": "Critical thinker",
+    "disc": "C",
+    "text": "Eleştirel düşünen; bilgiyi sorgulayan, hataları ve tutarsızlıkları fark eden."
+  },
+  {
+    "group": 21,
+    "wordNo": "21.3",
+    "original": "Casual, laid-back",
+    "disc": "S",
+    "text": "Rahat ve resmiyetten uzak; baskıyı düşük tutan, gevşek tempolu."
+  },
+  {
+    "group": 21,
+    "wordNo": "21.4",
+    "original": "Light-hearted, carefree",
+    "disc": "I",
+    "text": "Neşeli ve kaygısız; olayları fazla ağırlaştırmadan ele alan."
+  },
+  {
+    "group": 22,
+    "wordNo": "22.1",
+    "original": "Brave, unafraid, courageous",
+    "disc": "D",
+    "text": "Cesur ve korkusuz; zor veya riskli durumlarda geri durmayan."
+  },
+  {
+    "group": 22,
+    "wordNo": "22.2",
+    "original": "Inspiring, motivating",
+    "disc": "I",
+    "text": "İlham verici ve motive edici; insanları heyecanlandırıp harekete geçiren."
+  },
+  {
+    "group": 22,
+    "wordNo": "22.3",
+    "original": "Avoid confrontation",
+    "disc": "S",
+    "text": "Yüzleşmeden kaçınan; doğrudan çatışma yerine uyumu ve sakinliği tercih eden."
+  },
+  {
+    "group": 22,
+    "wordNo": "22.4",
+    "original": "Quiet, composed",
+    "disc": "C",
+    "text": "Sessiz ve soğukkanlı; sakin, dengeli ve kontrollü duran."
+  },
+  {
+    "group": 23,
+    "wordNo": "23.1",
+    "original": "Cautious, wary, careful",
+    "disc": "C",
+    "text": "Temkinli, ihtiyatlı ve dikkatli; karar vermeden önce riskleri gözeten."
+  },
+  {
+    "group": 23,
+    "wordNo": "23.2",
+    "original": "Determined, decided, unwavering, stand firm",
+    "disc": "D",
+    "text": "Kararlı, kesin ve sarsılmayan; aldığı kararın arkasında duran."
+  },
+  {
+    "group": 23,
+    "wordNo": "23.3",
+    "original": "Convincing, assuring",
+    "disc": "I",
+    "text": "İkna edici ve güven veren; karşı tarafı rahatlatıp inandıran."
+  },
+  {
+    "group": 23,
+    "wordNo": "23.4",
+    "original": "Good-natured, pleasant",
+    "disc": "S",
+    "text": "İyi huylu ve hoş; geçimi kolay, olumlu ve yumuşak tavırlı."
+  },
+  {
+    "group": 24,
+    "wordNo": "24.1",
+    "original": "Jovial, joking",
+    "disc": "I",
+    "text": "Şen şakrak ve esprili; ortamı neşelendiren."
+  },
+  {
+    "group": 24,
+    "wordNo": "24.2",
+    "original": "Organised",
+    "disc": "C",
+    "text": "Organize; işleri planlı, sıralı ve düzenli yürüten."
+  },
+  {
+    "group": 24,
+    "wordNo": "24.3",
+    "original": "Daring, gutsy, brazen",
+    "disc": "D",
+    "text": "Gözü pek, cesaretli ve çekinmez; zor veya riskli durumda cesaretle davranan."
+  },
+  {
+    "group": 24,
+    "wordNo": "24.4",
+    "original": "Even-tempered, calm, not easily excited",
+    "disc": "S",
+    "text": "Dengeli ve sakin; kolay heyecanlanmayan veya çabuk tepki vermeyen."
+  }
+];
+    const STORAGE_KEY = 'tutum_atolyesi_disc_answers_v3';
+
+    const byGroup = [...new Set(ITEMS.map(x => x.group))].map(group => {
+      return { group, items: ITEMS.filter(x => x.group === group) };
+    });
+
+    const state = { person: { firstName:'', lastName:'', email:'', company:'' }, answers: {} };
+
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+
+    function renderQuestions() {
+      const wrap = document.getElementById('questions');
+      wrap.innerHTML = byGroup.map(g => `
+        <section class="question" id="group-${g.group}" data-group="${g.group}">
+          <div class="q-top">
+            <div class="q-title">Grup ${g.group}</div>
+            <div class="q-status" id="status-${g.group}">Eksik</div>
+          </div>
+          <div class="options">
+            ${g.items.map((item, idx) => `
+              <div class="option" data-word="${escapeHtml(item.wordNo)}">
+                <div>
+                  <div class="option-text">${escapeHtml(item.text)}</div>
+                  <div class="option-meta">Word No: ${escapeHtml(item.wordNo)} · Orijinal: ${escapeHtml(item.original)}</div>
+                </div>
+                <div class="choices">
+                  <label class="choice most" data-choice="most" data-group="${g.group}" data-index="${idx}"><input type="radio" name="most-${g.group}" />En Çok</label>
+                  <label class="choice least" data-choice="least" data-group="${g.group}" data-index="${idx}"><input type="radio" name="least-${g.group}" />En Az</label>
+                </div>
+              </div>`).join('')}
+          </div>
+          <div class="error" id="error-${g.group}">Bu grupta “En Çok” ve “En Az” için iki farklı ifade seçilmelidir.</div>
+        </section>`).join('');
+    }
+
+    function getPerson() {
+      return {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        company: document.getElementById('company').value.trim()
+      };
+    }
+
+    function personComplete() {
+      const p = getPerson();
+      return p.firstName && p.lastName && p.email && p.company && document.getElementById('email').checkValidity();
+    }
+
+    function selectChoice(group, type, index) {
+      const key = String(group);
+      state.answers[key] ||= { most:null, least:null };
+      if (type === 'most') {
+        state.answers[key].most = index;
+        if (state.answers[key].least === index) state.answers[key].least = null;
+      } else {
+        state.answers[key].least = index;
+        if (state.answers[key].most === index) state.answers[key].most = null;
+      }
+      saveToLocal();
+      updateUI();
+    }
+
+    function groupComplete(group) {
+      const a = state.answers[String(group)];
+      return a && Number.isInteger(a.most) && Number.isInteger(a.least) && a.most !== a.least;
+    }
+
+    function completedCount() { return byGroup.filter(g => groupComplete(g.group)).length; }
+
+    function updateUI() {
+      byGroup.forEach(g => {
+        const a = state.answers[String(g.group)] || {};
+        document.querySelectorAll(`[data-group="${g.group}"] .choice`).forEach(el => {
+          const type = el.dataset.choice;
+          const idx = Number(el.dataset.index);
+          el.classList.toggle('active', a[type] === idx);
+          const input = el.querySelector('input');
+          if (input) input.checked = a[type] === idx;
+        });
+        const done = groupComplete(g.group);
+        const status = document.getElementById(`status-${g.group}`);
+        status.textContent = done ? 'Tamamlandı' : 'Eksik';
+        status.classList.toggle('done', done);
+        document.getElementById(`error-${g.group}`).classList.toggle('show', !!a.most === false || !!a.least === false ? false : (a.most === a.least && a.most !== null && a.most !== undefined));
+        document.getElementById(`group-${g.group}`).classList.toggle('incomplete', false);
+      });
+      const done = completedCount();
+      document.getElementById('progressLabel').textContent = `${done} / 24 grup`;
+      document.getElementById('progressBar').style.width = `${Math.round(done/24*100)}%`;
+      const ready = done === 24 && personComplete();
+      document.getElementById('submitBtn').disabled = !ready;
+      document.getElementById('summaryText').textContent = ready ? 'Tüm bilgiler tamamlandı. PDF indirilebilir.' : `Katılımcı bilgileri ve ${24 - done} grup daha tamamlanmalı.`;
+    }
+
+    function collectResults() {
+      const person = getPerson();
+      const responses = byGroup.map(g => {
+        const a = state.answers[String(g.group)];
+        const most = g.items[a.most];
+        const least = g.items[a.least];
+        return { group:g.group, most, least };
+      });
+      const counts = { most: { D:0, I:0, S:0, C:0 }, least: { D:0, I:0, S:0, C:0 } };
+      responses.forEach(r => { counts.most[r.most.disc]++; counts.least[r.least.disc]++; });
+      const scores = ['D','I','S','C'].map(k => {
+        const mostRaw = counts.most[k];
+        const leastRaw = counts.least[k];
+        return {
+          disc:k,
+          mostRaw,
+          leastRaw,
+          adapted: Math.max(0, Math.min(100, 50 + ((mostRaw - 6) * 8))),
+          natural: Math.max(0, Math.min(100, 50 + ((mostRaw - leastRaw) * 6))),
+          difference: mostRaw - leastRaw
+        };
+      });
+      return { person, responses, counts, scores, createdAt: new Date().toISOString() };
+    }
+
+    function validateAndMark() {
+      let firstBad = null;
+      if (!personComplete()) {
+        firstBad = document.querySelector('.person');
+        ['firstName','lastName','email','company'].forEach(id => {
+          const el = document.getElementById(id);
+          el.reportValidity?.();
+        });
+      }
+      byGroup.forEach(g => {
+        const q = document.getElementById(`group-${g.group}`);
+        const ok = groupComplete(g.group);
+        q.classList.toggle('incomplete', !ok);
+        if (!ok && !firstBad) firstBad = q;
+      });
+      if (firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+      return !firstBad;
+    }
+
+    function saveToLocal() {
+      state.person = getPerson();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function restoreFromLocal() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        Object.assign(state.person, saved.person || {});
+        Object.assign(state.answers, saved.answers || {});
+        ['firstName','lastName','email','company'].forEach(id => { document.getElementById(id).value = state.person[id] || ''; });
+      } catch(e) { console.warn('Kayıt okunamadı', e); }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 1800);
+    }
+
+    function safeFileName(s) {
+      return String(s || 'DISC_Anket_Yanitlari').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,80) || 'DISC_Anket_Yanitlari';
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+
+    function downloadJson() {
+      if (!validateAndMark()) return;
+      const data = collectResults();
+      const name = safeFileName(`${data.person.firstName}_${data.person.lastName}_DISC_yanitlari.json`);
+      downloadBlob(new Blob([JSON.stringify(data, null, 2)], {type:'application/json;charset=utf-8'}), name);
+      showToast('JSON indirildi.');
+    }
+
+    function wrapText(ctx, text, maxWidth) {
+      const words = String(text).split(/\s+/);
+      const lines = [];
+      let line = '';
+      words.forEach(word => {
+        const test = line ? line + ' ' + word : word;
+        if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = word; }
+        else line = test;
+      });
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function drawTextBlock(ctx, text, x, y, maxWidth, lineHeight, opts={}) {
+      const lines = wrapText(ctx, text, maxWidth);
+      lines.forEach(line => { ctx.fillText(line, x, y); y += lineHeight; });
+      return y + (opts.after || 0);
+    }
+
+    function makePdfFromJpegs(jpegs, pageW, pageH) {
+      const enc = new TextEncoder();
+      const chunks = [];
+      const offsets = [0];
+      let pos = 0;
+      function add(data) {
+        const bytes = typeof data === 'string' ? enc.encode(data) : data;
+        chunks.push(bytes); pos += bytes.length;
+      }
+      function obj(n, body) { offsets[n] = pos; add(`${n} 0 obj
+${body}
+endobj
+`); }
+      const objectCount = 2 + jpegs.length * 3;
+      add('%PDF-1.4\n%\xFF\xFF\xFF\xFF\n');
+      obj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+      const kids = jpegs.map((_, i) => `${3 + i*3} 0 R`).join(' ');
+      obj(2, `<< /Type /Pages /Count ${jpegs.length} /Kids [ ${kids} ] >>`);
+      jpegs.forEach((jpg, i) => {
+        const pageObj = 3 + i*3, imgObj = pageObj + 1, contObj = pageObj + 2;
+        const content = `q
+${pageW} 0 0 ${pageH} 0 0 cm
+/Im${i} Do
+Q
+`;
+        obj(pageObj, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Resources << /XObject << /Im${i} ${imgObj} 0 R >> >> /Contents ${contObj} 0 R >>`);
+        offsets[imgObj] = pos;
+        add(`${imgObj} 0 obj
+<< /Type /XObject /Subtype /Image /Width ${jpg.width} /Height ${jpg.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.bytes.length} >>
+stream
+`);
+        add(jpg.bytes);
+        add('\nendstream\nendobj\n');
+        obj(contObj, `<< /Length ${content.length} >>
+stream
+${content}endstream`);
+      });
+      const xrefPos = pos;
+      add(`xref
+0 ${objectCount + 1}
+0000000000 65535 f 
+`);
+      for (let i=1; i<=objectCount; i++) add(`${String(offsets[i]).padStart(10,'0')} 00000 n 
+`);
+      add(`trailer
+<< /Size ${objectCount + 1} /Root 1 0 R >>
+startxref
+${xrefPos}
+%%EOF`);
+      return new Blob(chunks, {type:'application/pdf'});
+    }
+
+    async function imageToElement(src) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+    }
+
+    function dataUrlToBytes(dataUrl) {
+      const bin = atob(dataUrl.split(',')[1]);
+      const arr = new Uint8Array(bin.length);
+      for (let i=0; i<bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return arr;
+    }
+
+    async function generatePdf() {
+      if (!validateAndMark()) return;
+      const data = collectResults();
+      const logo = await imageToElement('assets/logo.png');
+      const pageWpt = 595.28, pageHpt = 841.89;
+      const scale = 2;
+      const cw = Math.round(pageWpt * scale), ch = Math.round(pageHpt * scale);
+      const margin = 54 * scale;
+      const lineH = 18 * scale;
+      const pages = [];
+      let canvas, ctx, y;
+      function newPage() {
+        canvas = document.createElement('canvas'); canvas.width = cw; canvas.height = ch;
+        ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,cw,ch);
+        ctx.fillStyle = '#c8102e'; ctx.fillRect(0,0,10*scale,ch);
+        if (logo) ctx.drawImage(logo, cw - margin - 180*scale, 34*scale, 180*scale, 110*scale);
+        ctx.fillStyle = '#111827'; ctx.font = `${22*scale}px Montserrat, Arial, sans-serif`; ctx.fillText('DISC Davranış Anketi Yanıtları', margin, 64*scale);
+        ctx.fillStyle = '#667085'; ctx.font = `${10*scale}px Inter, Arial, sans-serif`; ctx.fillText('Tutum Atölyesi Eğitim', margin, 84*scale);
+        y = 130 * scale;
+      }
+      function finishPage() {
+        ctx.fillStyle = '#98a2b3'; ctx.font = `${9*scale}px Inter, Arial, sans-serif`;
+        ctx.fillText(`Oluşturma: ${new Date().toLocaleString('tr-TR')}`, margin, ch - 32*scale);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+        pages.push({bytes:dataUrlToBytes(dataUrl), width:cw, height:ch});
+      }
+      function ensure(space) { if (y + space > ch - 60*scale) { finishPage(); newPage(); } }
+      function line(label, value) {
+        ctx.fillStyle = '#344054'; ctx.font = `${10*scale}px Inter, Arial, sans-serif`; ctx.fillText(label, margin, y);
+        ctx.fillStyle = '#111827'; ctx.font = `${12*scale}px Inter, Arial, sans-serif`; ctx.fillText(value || '-', margin + 110*scale, y);
+        y += 22*scale;
+      }
+      newPage();
+      ctx.fillStyle = '#c8102e'; ctx.font = `${14*scale}px Montserrat, Arial, sans-serif`; ctx.fillText('Katılımcı Bilgileri', margin, y); y += 26*scale;
+      line('Ad Soyad', `${data.person.firstName} ${data.person.lastName}`);
+      line('E-posta', data.person.email);
+      line('Kurum / Şirket', data.person.company);
+      y += 12*scale;
+      ctx.fillStyle = '#c8102e'; ctx.font = `${14*scale}px Montserrat, Arial, sans-serif`; ctx.fillText('DISC Ham ve Standart Skor Özeti', margin, y); y += 24*scale;
+      ctx.font = `${10*scale}px Inter, Arial, sans-serif`; ctx.fillStyle = '#111827';
+      ctx.fillText('DISC', margin, y); ctx.fillText('En Çok Ham', margin+80*scale, y); ctx.fillText('En Az Ham', margin+180*scale, y); ctx.fillText('Uyarlanmış', margin+280*scale, y); ctx.fillText('Doğal', margin+390*scale, y); y += 16*scale;
+      ctx.strokeStyle = '#eadfd4'; ctx.beginPath(); ctx.moveTo(margin, y); ctx.lineTo(cw-margin, y); ctx.stroke(); y += 20*scale;
+      data.scores.forEach(s => {
+        ctx.fillStyle = '#111827'; ctx.font = `${11*scale}px Inter, Arial, sans-serif`;
+        ctx.fillText(s.disc, margin, y); ctx.fillText(String(s.mostRaw), margin+92*scale, y); ctx.fillText(String(s.leastRaw), margin+192*scale, y); ctx.fillText(String(s.adapted), margin+296*scale, y); ctx.fillText(String(s.natural), margin+396*scale, y); y += 20*scale;
+      });
+      y += 14*scale;
+      data.responses.forEach(r => {
+        ensure(120*scale);
+        ctx.fillStyle = '#c8102e'; ctx.font = `${12*scale}px Montserrat, Arial, sans-serif`; ctx.fillText(`Grup ${r.group}`, margin, y); y += 20*scale;
+        ctx.fillStyle = '#027a48'; ctx.font = `${10*scale}px Inter, Arial, sans-serif`; ctx.fillText('En Çok', margin, y); y += 16*scale;
+        ctx.fillStyle = '#111827'; ctx.font = `${10.5*scale}px Inter, Arial, sans-serif`; y = drawTextBlock(ctx, r.most.text, margin, y, cw - 2*margin, lineH, {after:2*scale});
+        ctx.fillStyle = '#98a2b3'; ctx.font = `${8.5*scale}px Inter, Arial, sans-serif`; y = drawTextBlock(ctx, `Word No: ${r.most.wordNo} · Orijinal: ${r.most.original} · DISC: ${r.most.disc}`, margin, y, cw - 2*margin, 12*scale, {after:7*scale});
+        ctx.fillStyle = '#5f6368'; ctx.font = `${10*scale}px Inter, Arial, sans-serif`; ctx.fillText('En Az', margin, y); y += 16*scale;
+        ctx.fillStyle = '#111827'; ctx.font = `${10.5*scale}px Inter, Arial, sans-serif`; y = drawTextBlock(ctx, r.least.text, margin, y, cw - 2*margin, lineH, {after:2*scale});
+        ctx.fillStyle = '#98a2b3'; ctx.font = `${8.5*scale}px Inter, Arial, sans-serif`; y = drawTextBlock(ctx, `Word No: ${r.least.wordNo} · Orijinal: ${r.least.original} · DISC: ${r.least.disc}`, margin, y, cw - 2*margin, 12*scale, {after:12*scale});
+      });
+      finishPage();
+      const pdfBlob = makePdfFromJpegs(pages, pageWpt, pageHpt);
+      const name = safeFileName(`${data.person.firstName}_${data.person.lastName}_DISC_yanitlari.pdf`);
+      downloadBlob(pdfBlob, name);
+      showToast('PDF indirildi.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuestions();
+      restoreFromLocal();
+      document.querySelectorAll('.choice').forEach(el => {
+        el.addEventListener('click', () => selectChoice(Number(el.dataset.group), el.dataset.choice, Number(el.dataset.index)));
+      });
+      ['firstName','lastName','email','company'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => { saveToLocal(); updateUI(); });
+      });
+      document.getElementById('submitBtn').addEventListener('click', generatePdf);
+      document.getElementById('saveJsonBtn').addEventListener('click', downloadJson);
+      updateUI();
+    });
+  </script>
+</body>
+</html>
